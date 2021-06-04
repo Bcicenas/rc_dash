@@ -1,0 +1,66 @@
+#:kivy 1.0
+#:import rgba kivy.utils.get_color_from_hex
+<StatusController>:
+	label_status_antena: label_status_antena
+	label_status_controller: label_status_controller
+	size_hint: 1, 0.1
+	BoxLayout:
+		orientation: 'horizontal'
+		Label:
+			id: label_status_antena
+			text: 'Antena status: ' + root.antena_status 
+		Label:
+			id: label_status_controller
+			text: 'Controller status: ' + root.controller_status 
+
+<CameraController>:
+	size_hint: 1, 0.7
+	Label:
+		text: 'Camera will be here'
+<ConsoleController>:
+	size_hint: 1, 0.2
+	text_input_id: text_input_id
+	label_id: label_id
+	BoxLayout:
+		orientation: 'vertical'
+		ScrollView:
+			size_hint: 1, 0.8
+			do_scroll_x: False
+    		do_scroll_y: True
+    		canvas.before:
+				Color:
+					rgba: 0,0,0,1
+				Rectangle:
+					pos: self.pos
+					size: self.size
+			Label:
+				id: label_id
+				size_hint_y: None
+				text_size: self.size
+				font_size: '12sp'
+				halign: 'left'
+				valign: 'top'
+				text: 'Welcome!\n'
+				multiline: True
+
+		TextInput:
+			id: text_input_id
+			font_size: '12sp'
+			size_hint: 1, 0.2
+			text_validate_unfocus: False
+			multiline: False
+			on_text_validate: root.on_enter()
+<DashboardController>:
+	canvas.before:
+		Color:
+			rgba: rgba('#008EA4')
+		Rectangle:
+			pos: self.pos
+			size: self.size
+	BoxLayout:
+		orientation: 'vertical'
+		StatusController:
+			antena_status: 'Not Connected'
+			controller_status: 'Not Connected'
+		CameraController:
+		ConsoleController:
