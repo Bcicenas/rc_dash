@@ -59,7 +59,7 @@ def check_for_button_press():
 
 		if event.type == pygame.JOYAXISMOTION:
 			analog_buttons[event.axis] = event.value
-			print(analog_buttons)
+			# print(analog_buttons)
 # class for ps4 controller
 class Ps4Controller(threading.Thread):
 
