@@ -37,6 +37,15 @@ class DashboardApp(App):
 		self.textpopup(title='Exit', text='Are you sure?')
 		return True
 		
+	def on_start(self):
+		self.root.start_second_thread()
+
+	def on_stop(self):
+		# The Kivy event loop is about to stop, set a stop signal;
+		# otherwise the app window will close, but the Python process will
+		# keep running until all secondary threads exit.
+		self.root.stop.set()
+
 	def textpopup(self, title='', text=''):
 		"""Open the pop-up with the name.
 

@@ -43,64 +43,13 @@ buttons = {
 #4 left trigger
 #5 rigth trigger
 analog_buttons = {0:0, 1:0, 2:0, 3:0, 4:-1, 5:-1}
-
+pressed_buttons = None
 
 def check_for_button_press():
-	for event in pygame.event.get():
-		if event.type == pygame.JOYBUTTONDOWN:
-			print(buttons[event.button] + ' pressed')				
-
-		if event.type == pygame.JOYBUTTONDOWN:
-			if event.button == 5:
-				print('PS btn pressed. exiting...')
-
-		if event.type == pygame.JOYBUTTONUP:
-			print(buttons[event.button] + ' released')	
-
+	events = pygame.event.get()
+	for event in events:
 		if event.type == pygame.JOYAXISMOTION:
+			print(event.value)
 			analog_buttons[event.axis] = event.value
-			# print(analog_buttons)
-# class for ps4 controller
-class Ps4Controller(threading.Thread):
 
-	def __init__(self, threadID, name, counter):
-		threading.Thread.__init__(self)
-		self.name = name
-		self.threadID = threadID
-		self.counter = counter
-		self.break_flag = True
-
-	def run(self):
-		print("Starting thread for ps4 controller: " + self.name)
-		self.execute_controller_thread()
-		print("Exiting thread for ps4 controller: " + self.name)
-
-# 	# 1. checks if controller is connected
-# 	def check_connection(self):
-# 		return True
-
-# 	# 2. checks id button is pressed
-# 	def listen_for_inputs(self):
-# 		pass
-
-# 	# 3. runs 1 and 2
-	def execute_controller_thread(self):
-		while self.break_flag:
-			for event in pygame.event.get():
-				if event.type == pygame.JOYBUTTONDOWN:
-					print(buttons[event.button] + ' pressed')				
-
-				if event.type == pygame.JOYBUTTONDOWN:
-					if event.button == 5:
-						self.break_flag = False
-						print('PS btn pressed. exiting...')
-
-				if event.type == pygame.JOYBUTTONUP:
-					print(buttons[event.button] + ' released')	
-
-				if event.type == pygame.JOYAXISMOTION:
-					analog_buttons[event.axis] = event.value
-					print(analog_buttons)
-
-			time.sleep(0.1)
 

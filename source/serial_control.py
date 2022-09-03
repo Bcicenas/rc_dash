@@ -3,12 +3,12 @@ import serial
 import time
 import ps4_controller
 import struct
-
+import msvcrt
 # Get active ps4 controllers
 ps4_controller.get_joystics()
 
 # Open serial connection beetwen PC and Arduino
-arduino = serial.Serial(port='COM4', baudrate=9600, timeout=.1)
+arduino = serial.Serial(port='COM3', baudrate=9600, timeout=.1)
 
 # function to send and read data from/to Arduino
 def write_read(x):
@@ -25,11 +25,17 @@ def remap_value(x):
 
 	return 2
 
-# Main loop for sending and receiving data
-while True:
+# get inputs from controller and send it to arduino
+def send_data():
 	ps4_controller.check_for_button_press()
 	control_array = [remap_value(int(ps4_controller.analog_buttons[0])), remap_value(int(ps4_controller.analog_buttons[5])), remap_value(int(ps4_controller.analog_buttons[4]))]
+	print(control_array)
 	write_read(control_array)
+
+
+
+while True:
+	if msvcrt.kbhit() and msvcrt.getch() == chr(27).encode():
+		break
+	send_data()
 	time.sleep(0.1)
-
-
